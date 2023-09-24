@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta name="robots" content="noindex"/>
+        <link rel="icon" href="data:,"/>
+        {% if page.title %}{% set title = page.title %}{% elif section.title %}{% set title = section.title %}{% elif config.title %}{% set title = config.title %}{% endif %}{% if title %}<title>{{ title }}</title>{% endif %}
+        <link rel="stylesheet" href="{{ get_url(path='style.css', trailing_slash=false) | safe }}"/>
+        {% block meta %}{% endblock meta %}
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <nav>
+                    <a href="{{ get_url(path='@/_index.md') | safe }}">home</a>
+                    <a href="{{ get_url(path='@/about/_index.md') | safe }}">about</a>
+                </nav>
+                {% block header %}{% if title %}<h1>{{ config.title }}</h1>{% endif %}{% endblock header %}
+            </header>
+            <main class="page-content" aria-label="Content">
+                {% block content %}{% endblock content %}
+            </main>
+            <footer>
+                {% block footer %}
+                {% if get_env(name=config.extra.commit_hash_env_var, default="") != "" %}
+                {% set commit_hash = get_env(name=config.extra.commit_hash_env_var) %}
+                deployed from commit <a href="{{ config.extra.base_commit_url | safe }}/{{ commit_hash | safe }}">{{ commit_hash | safe }}</a>
+                {% endif %}
+                {% endblock footer %}
+            </footer>
+        </div>
+        {% block script %}{% endblock script %}
+    </body>
+</html>

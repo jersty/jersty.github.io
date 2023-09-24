@@ -1,0 +1,97 @@
+@mixin dark-appearance {
+  filter: invert(1);
+
+  img {
+    filter: invert(1);
+  }
+}
+
+body[theme="dark"] {
+  @include dark-appearance;
+}
+
+@media (prefers-color-scheme: dark) {
+  body[theme="auto"] {
+    @include dark-appearance;
+  }
+}
+
+html,
+body {
+  background: white;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: black;
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  min-height: 100%;
+  overflow-wrap: break-word;
+}
+
+.w {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+nav,
+.taxonomies {
+  text-align: center;
+}
+
+nav a {
+  margin: 0 0.2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.post-meta {
+  text-align: center;
+}
+
+ul {
+  list-style-type: square;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+table {
+  width: 100%;
+}
+
+table,
+th,
+td {
+  border: thin solid black;
+  border-collapse: collapse;
+  padding: 0.4rem;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: right;
+  opacity: 0.5;
+}

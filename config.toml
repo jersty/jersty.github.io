@@ -1,0 +1,7 @@
+base_url = "https://jersty.github.io"
+compile_sass = true
+minify_html = true
+
+[extra]
+commit_hash_env_var = "GITHUB_SHA_SHORT"
+base_commit_url = "https://github.com/jersty/jersty.github.io/commit"

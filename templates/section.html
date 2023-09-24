@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>{{ section.title }}</h1>
+{% endblock header %}
+
+{% block content %}
+{{ section.content | safe }}
+
+<ul>
+{% for page in section.pages %}
+    <li>
+        {% if page.date %}<span style="font-family: monospace;">{{ page.date }}</span> {% endif %}<a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        <br />
+        {{ page.description }}
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}
