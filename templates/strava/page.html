@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block meta -%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src=" https://cdn.jsdelivr.net/npm/polyline-encoded@0.0.9/Polyline.encoded.min.js"></script>
+{% endblock meta -%}
+
+{% block header %}
+<h1>{{ page.title }}</h1>
+<p class="post-meta"><time datetime="{{ page.date }}">{{ page.date }}</time></p>
+<p class="post-meta"><a href="https://www.strava.com/activities/{{ page.extra.activity }}">View on Strava</a></p>
+{% endblock header %}
+
+{% block content %}
+<section class="post-meta">
+    <strong>Distance:</strong> {{ page.extra.distance }} km ({{ page.extra.distance_imperial }} mi)<br/>
+    <strong>Elevation gain:</strong> {{ page.extra.elevationgain }} m ({{ page.extra.elevationgain_imperial }} ft)<br/>
+</section>
+
+{% if page.extra.polyline %}
+<div id="map"></div>
+<script>
+    var decoded_polyline = L.PolylineUtil.decode('{{ page.extra.polyline | safe }}');
+    var polyline = L.polyline(decoded_polyline, {color: 'red'});
+    
+    var map = L.map('map').setView(polyline.getBounds().getCenter(), 16);
+    map.attributionControl.setPrefix(false);
+    polyline.addTo(map);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    
+    var start = L.latLng(decoded_polyline[0]);
+    var start_marker = L.marker(start).addTo(map).bindPopup('Start');
+    var end = L.latLng(decoded_polyline[decoded_polyline.length - 1]);
+    var end_marker = L.marker(end).addTo(map).bindPopup('End');
+    map.fitBounds(polyline.getBounds())
+</script>
+{% endif %}
+
+{{ page.content | safe }}
+
+{% if page.extra.pictures %}
+<h2>Pictures</h2>
+
+{% for picture in page.extra.pictures %}
+<p>
+    <a href="{{ picture }}"><img src="{{ picture }}" alt=""></a>
+</p>
+{% endfor %}
+{% endif %}
+{% endblock content %}

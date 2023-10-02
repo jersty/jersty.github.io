@@ -4,6 +4,10 @@
   img {
     filter: invert(1);
   }
+
+  .leaflet-overlay-pane {
+    filter: invert(1);
+  }
 }
 
 body[theme="dark"] {
@@ -88,6 +92,13 @@ img {
   max-width: 100%;
   display: block;
   margin: 0 auto;
+}
+
+.leaflet-container {
+  height: 400px;
+  max-width: 100%;
+  display: block;
+  margin: 1rem auto;
 }
 
 footer {
